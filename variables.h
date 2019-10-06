@@ -13,7 +13,7 @@
 
                 int etat=0;
 
-                //le type �num�r� des token
+
                 typedef enum{
                           IF_TOKEN,
                           THEN_TOKEN,
