@@ -37,10 +37,22 @@ int est_car_spe(char nom[20]){
 }
 
 char* char_to_string(char c){
-    char* string = (char*)malloc(2* sizeof(char));
-    string[0] = c;
-    string[1] = '\0';
-    return string;
+    char* stringi = (char*)malloc(2* sizeof(char));
+    stringi[0] = c;
+    stringi[1] = '\0';
+    return stringi;
+}
+
+char* LastcharDel(char* name)
+{
+    int i = 0;
+    while(name[i] != '\0')
+    {
+        i++;
+
+    }
+    name[i-1] = '\0';
+    return name;
 }
 
 int checkString(char str1[])
@@ -156,6 +168,25 @@ void Affichage_Token(CODES_LEX code)
     }
 }
 
+int Car_Cour_Car_Spe(char c){
+    char premier_cara = c;
+    if(est_car_spe(char_to_string(premier_cara)) || premier_cara == ':' ){
+        Lire_Car();
+        string = (char*)malloc(3* sizeof(char));
+        string[0] = premier_cara;
+        string[1] = Car_Cour;
+        string[2] = '\0';
+        if (est_car_spe(string)){
+            return 2;
+        }else if ( est_car_spe(LastcharDel(string))){
+            fseek(Fichier, -1, SEEK_CUR);
+            return 1;
+        }
+    }
+    return 0;
+
+}
+
 void verification_des_token_lus(){
 
     int n;
@@ -165,7 +196,7 @@ void verification_des_token_lus(){
   switch (etat) {
 
       case 1:
-          //printf("\n fine in switch case");
+          printf("\n fine in switch case");
       if (checkString(mot) != 0) {
           //printf("\n it's an alpha");
           etat = 2;
@@ -173,11 +204,11 @@ void verification_des_token_lus(){
       else {
           etat = 3;
           printf("on est là");
-      } //digit ? identificateur ?
+      } //digit ? identificateur ? car_spe ?
       break;
 
     case 2 :
-      //printf("Am here now");
+      printf("Am here now");
       if (est_mot_cle(mot) == 1) {
         for (size_t i = 0; i < taille_tab_mot_cles; i++) {
           if (strcmp(mot, tab_mot_cle[i].NOM) == 0) {
@@ -194,6 +225,7 @@ void verification_des_token_lus(){
 
     case 3:
       if (isdigit(mot[0]) != 0) {
+          printf("on est là");
         k=1;
         if((isdigit(mot[k++])!= 0)) etat = 5;//NUM_TOKEN
         else{
@@ -202,7 +234,10 @@ void verification_des_token_lus(){
           }
           if ((mot[k+1]=='.' && isdigit(mot[k++]!=0)) || mot[k]=='.') etat = 5;
         }
-      }else etat = 6; //caractère spe ou identificateur
+      }else{
+          printf("on est là");
+          etat = 6;
+      }  //car_spe ou identificateur
       break;
 
     case 4:

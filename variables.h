@@ -4,12 +4,15 @@
                 FILE * Fichier;
 
                 char mot[20];
-                char nouveau_mot[20];
+                char* string;
+
                 extern int etat;
 
                 extern int etat_checked;
+                extern int etat_trouve;
 
-                char caractere[2];
+
+                char caractere_special[2];
 
                 typedef enum{
                           IF_TOKEN,
