@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define  taille_tab_mot_cles 12
-#define  taille_tab_sym_spe 16
+#define  taille_tab_sym_spe 17
 
 #include "prototypes.h"
 
@@ -26,6 +26,8 @@ TSym_Cour tab_mot_cle[taille_tab_mot_cles]={
 
 //tableau des caracteres speciaux
 TSym_Cour tab_car_spe[taille_tab_sym_spe]={
+        {",",VIR_TOKEN},
+        {"=", EG_TOKEN},
         {";",PV_TOKEN},
         {"/",DIV_TOKEN},
         {".",PT_TOKEN},
@@ -34,78 +36,65 @@ TSym_Cour tab_car_spe[taille_tab_sym_spe]={
         {"-",MOINS_TOKEN},
         {"<", INF_TOKEN},
         {"<=",INFEG_TOKEN},
+        {":=", AFF_TOKEN},
         {">",SUP_TOKEN},
         {"<=",SUPEG_TOKEN},
         {"<>",DIFF_TOKEN},
+        {"EOF", FIN_TOKEN},
         {"(",PO_TOKEN},
         {")",PF_TOKEN},
-        {"EOF",FIN_TOKEN},
-        {":=",AFF_TOKEN},
-        {",",VIR_TOKEN},
 };
 
 int main(int argc, char const *argv[]) {
   Fichier = fopen("/Users/macbook/CLionProjects/untitled/test.p", "r");
   do{
       Lire_Car();
-      printf("    %c \t", Car_Cour);
+      //printf("%c \t", Car_Cour);
       switch (Car_Cour){
           case '\t' :
-              printf("On est là ");
-              strcpy(mot, "");
+              //printf("I found a tabulation sign\n");
+              //strcpy(mot, "");
               break;
           case '\n':
-              printf("On est là 2");
-              strcpy(mot, "");
+              //printf("I found a new line sign\n");
               break;
           case ' ':
               while (Car_Cour == ' '){
                   Lire_Car();
               }
               fseek(Fichier, -1, SEEK_CUR);
-              printf("\n%s", mot);
-              //etat = 1;
-              verification_des_token_lus();
-              printf("\n------------case-----------");
-              Affichage_Token(Sym_COUR.CODE);
-              strcpy(mot, "");
+              if (strcmp(mot, "") != 0){
+                  //printf("\n-------------------------------------------------------------------------");
+                  //printf("\n%s", mot);
+                  //printf("\n-------------------------------------------------------------------------");
+                  verification_des_token_lus();
+                  printf("\n");
+                  Affichage_Token(Sym_COUR.CODE);
+                  strcpy(mot, "");
+              }
               break;
-          default :
-              //etat_checked =0;
+          default:
               if (checkString(char_to_string(Car_Cour)) || isdigit(Car_Cour) ){
                   strcat(mot, char_to_string(Car_Cour));
               }
               if (Car_Cour_Car_Spe(Car_Cour)){
-                  printf("\n%s", mot);
-                  //etat = 1;
-                  verification_des_token_lus();
-                  printf("\n-----------------------");
-                  Affichage_Token(Sym_COUR.CODE);
+                  if (strcmp(mot, "") != 0){
+                      //printf("\n%s", mot);
+                      verification_des_token_lus();
+                      printf("\n");
+                      Affichage_Token(Sym_COUR.CODE);
+                  }
                   strcpy(mot, string);
-                  printf("\n%s", mot);
-                  //etat = 1;
+                  //printf("\n%s", mot);
+                  //printf("---> caractre");
                   verification_des_token_lus();
-                  printf("\n-----------------------");
-                    /*
-                  if (est_car_spe(mot) == 1){
-                      for (int (i) = 0; (i) < taille_tab_sym_spe; (i)++) {
-                          if (strcmp(mot, tab_car_spe[i].NOM) == 0) {
-                              //printf("we are here ");
-                              Sym_COUR.CODE = tab_car_spe[i].CODE;
-                              strcpy(Sym_COUR.NOM, mot);
-                          }
-                      }
-                  }*/
-
+                  printf("\n");
                   Affichage_Token(Sym_COUR.CODE);
-
-                  //Affichage_Token(Sym_COUR.CODE);
-
+                  strcpy(mot, "");
               }
-              strcpy(mot, "");
               break;
       }
-      //etat_checked =0;
+
 
 
 

@@ -29,6 +29,7 @@
                           AFF_TOKEN,
                           INF_TOKEN,
                           INFEG_TOKEN,
+                          EG_TOKEN,
                           SUP_TOKEN,
                           SUPEG_TOKEN,
                           DIFF_TOKEN,

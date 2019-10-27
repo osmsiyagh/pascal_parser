@@ -6,7 +6,7 @@
 
 
 #define  taille_tab_mot_cles 12
-#define  taille_tab_sym_spe 16
+#define  taille_tab_sym_spe 17
 
 
 #include "prototypes.h"
@@ -126,6 +126,9 @@ void Affichage_Token(CODES_LEX code)
         case DIV_TOKEN :
             printf("DIV_TOKEN") ;
             break ;
+        case EG_TOKEN:
+            printf("EG_TOKEN") ;
+            break ;
         case VIR_TOKEN :
             printf("VIR_TOKEN") ;
             break ;
@@ -189,8 +192,6 @@ int Car_Cour_Car_Spe(char c){
 
 void verification_des_token_lus(){
     int k = 0;
-
-
     if (checkString(mot) != 0) //si tous les caracteres sont des lettres
         {
             if (est_mot_cle(mot) == 1) {
@@ -200,6 +201,10 @@ void verification_des_token_lus(){
                         strcpy(Sym_COUR.NOM, mot);
                     }
                 }
+            }else // ID
+             {
+                Sym_COUR.CODE = ID_TOKEN;
+                strcpy(Sym_COUR.NOM, mot);
             }
     }
     else //digit ? identificateur ? car_spe ?
