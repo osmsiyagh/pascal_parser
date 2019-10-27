@@ -188,15 +188,59 @@ int Car_Cour_Car_Spe(char c){
 }
 
 void verification_des_token_lus(){
+    int k = 0;
 
-    int n;
 
-  int k;
-
+    if (checkString(mot) != 0) //si tous les caracteres sont des lettres
+        {
+            if (est_mot_cle(mot) == 1) {
+                for (size_t i = 0; i < taille_tab_mot_cles; i++) {
+                    if (strcmp(mot, tab_mot_cle[i].NOM) == 0) {
+                        Sym_COUR.CODE = tab_mot_cle[i].CODE;
+                        strcpy(Sym_COUR.NOM, mot);
+                    }
+                }
+            }
+    }
+    else //digit ? identificateur ? car_spe ?
+        {
+            if (isdigit(mot[0]) != 0) {
+                k = 1;
+                if ((isdigit(mot[k++]) != 0)) //NUM_TOKEN
+                {
+                    Sym_COUR.CODE = NUM_TOKEN;
+                    strcpy(Sym_COUR.NOM, mot);
+                } else {
+                    while ((isdigit(mot[k] != 0) && mot[k + 1] != '.')) {
+                        k++;
+                    }
+                    if ((mot[k + 1] == '.' && isdigit(mot[k++] != 0)) || mot[k] == '.')//NUM_TOKEN
+                    {
+                        Sym_COUR.CODE = NUM_TOKEN;
+                        strcpy(Sym_COUR.NOM, mot);
+                    }
+                }
+            }else // ID
+            {
+                if (est_car_spe(mot) == 1){
+                    for (int i = 0; i < taille_tab_sym_spe; i++) {
+                        if (strcmp(mot, tab_car_spe[i].NOM) == 0) {
+                            Sym_COUR.CODE = tab_car_spe[i].CODE;
+                            strcpy(Sym_COUR.NOM, mot);
+                        }
+                    }
+                }else
+                {
+                    Sym_COUR.CODE = ID_TOKEN;
+                    strcpy(Sym_COUR.NOM, mot);
+                }
+            }
+    }
+/*
   switch (etat) {
 
       case 1:
-          printf("\n fine in switch case");
+          //printf("\n fine in switch case");
       if (checkString(mot) != 0) {
           //printf("\n it's an alpha");
           etat = 2;
@@ -208,13 +252,15 @@ void verification_des_token_lus(){
       break;
 
     case 2 :
-      printf("Am here now");
+      //printf("Am here now");
       if (est_mot_cle(mot) == 1) {
         for (size_t i = 0; i < taille_tab_mot_cles; i++) {
           if (strcmp(mot, tab_mot_cle[i].NOM) == 0) {
             Sym_COUR.CODE = tab_mot_cle[i].CODE;
             strcpy(Sym_COUR.NOM, mot);
+              printf("I did it");
             etat_checked = 1;
+            //etat = 1;
           }
         }
       }else {
@@ -225,7 +271,7 @@ void verification_des_token_lus(){
 
     case 3:
       if (isdigit(mot[0]) != 0) {
-          printf("on est là");
+        //  printf("on est là");
         k=1;
         if((isdigit(mot[k++])!= 0)) etat = 5;//NUM_TOKEN
         else{
@@ -236,7 +282,7 @@ void verification_des_token_lus(){
         }
       }else{
           printf("on est là");
-          etat = 6;
+          //etat = 6;
       }  //car_spe ou identificateur
       break;
 
@@ -244,10 +290,10 @@ void verification_des_token_lus(){
 
       Sym_COUR.CODE = ID_TOKEN;
       strcpy(Sym_COUR.NOM, mot);
-      //printf("on est là");
+      printf("on est là");
       etat_checked = 1;
       //printf("%s\n", Sym_COUR.CODE);
-      //etat = 0;
+      //etat = 1;
       break;
 
     case 5:
@@ -255,7 +301,7 @@ void verification_des_token_lus(){
       strcpy(Sym_COUR.NOM, mot);
       etat_checked = 1;
       //printf("%s\n", Sym_COUR.CODE);
-      //etat =0;
+      //etat = 1;
       break;
 
     case 6:
@@ -265,7 +311,7 @@ void verification_des_token_lus(){
                 strcpy(Sym_COUR.NOM, mot);
                 etat_checked = 1;
                 //printf("%s\n", Sym_COUR.CODE);
-                //etat = 0;
+                //etat = 1;
                 break;
             }
         }else etat = 4;
@@ -278,4 +324,5 @@ void verification_des_token_lus(){
 
       break;
   }
+  */
 }

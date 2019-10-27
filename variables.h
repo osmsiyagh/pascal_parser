@@ -6,14 +6,6 @@
                 char mot[20];
                 char* string;
 
-                extern int etat;
-
-                extern int etat_checked;
-                extern int etat_trouve;
-
-
-                char caractere_special[2];
-
                 typedef enum{
                           IF_TOKEN,
                           ELSE_TOKEN,

@@ -6,11 +6,7 @@
 #define  taille_tab_mot_cles 12
 #define  taille_tab_sym_spe 16
 
-
-
 #include "prototypes.h"
-
-
 
 
 TSym_Cour tab_mot_cle[taille_tab_mot_cles]={
@@ -27,7 +23,6 @@ TSym_Cour tab_mot_cle[taille_tab_mot_cles]={
         {"read", READ_TOKEN},
         {"write", WRITE_TOKEN},
 };
-
 
 //tableau des caracteres speciaux
 TSym_Cour tab_car_spe[taille_tab_sym_spe]={
@@ -49,47 +44,110 @@ TSym_Cour tab_car_spe[taille_tab_sym_spe]={
         {",",VIR_TOKEN},
 };
 
-int etat = 1;
-int etat_checked = 0;
-int etat_trouve = 0;
 int main(int argc, char const *argv[]) {
-
-
   Fichier = fopen("/Users/macbook/CLionProjects/untitled/test.p", "r");
-
-  int premiere_rencontre_espace = 1;
-  int premiere_rencontre_car_spe = 1;
-
-
   do{
+      Lire_Car();
+      printf("    %c \t", Car_Cour);
+      switch (Car_Cour){
+          case '\t' :
+              printf("On est là ");
+              strcpy(mot, "");
+              break;
+          case '\n':
+              printf("On est là 2");
+              strcpy(mot, "");
+              break;
+          case ' ':
+              while (Car_Cour == ' '){
+                  Lire_Car();
+              }
+              fseek(Fichier, -1, SEEK_CUR);
+              printf("\n%s", mot);
+              //etat = 1;
+              verification_des_token_lus();
+              printf("\n------------case-----------");
+              Affichage_Token(Sym_COUR.CODE);
+              strcpy(mot, "");
+              break;
+          default :
+              //etat_checked =0;
+              if (checkString(char_to_string(Car_Cour)) || isdigit(Car_Cour) ){
+                  strcat(mot, char_to_string(Car_Cour));
+              }
+              if (Car_Cour_Car_Spe(Car_Cour)){
+                  printf("\n%s", mot);
+                  //etat = 1;
+                  verification_des_token_lus();
+                  printf("\n-----------------------");
+                  Affichage_Token(Sym_COUR.CODE);
+                  strcpy(mot, string);
+                  printf("\n%s", mot);
+                  //etat = 1;
+                  verification_des_token_lus();
+                  printf("\n-----------------------");
+                    /*
+                  if (est_car_spe(mot) == 1){
+                      for (int (i) = 0; (i) < taille_tab_sym_spe; (i)++) {
+                          if (strcmp(mot, tab_car_spe[i].NOM) == 0) {
+                              //printf("we are here ");
+                              Sym_COUR.CODE = tab_car_spe[i].CODE;
+                              strcpy(Sym_COUR.NOM, mot);
+                          }
+                      }
+                  }*/
+
+                  Affichage_Token(Sym_COUR.CODE);
+
+                  //Affichage_Token(Sym_COUR.CODE);
+
+              }
+              strcpy(mot, "");
+              break;
+      }
+      //etat_checked =0;
+
+
+
+
+
+
+
+
+      /*
       Lire_Car();
 
       if (Car_Cour_Car_Spe(Car_Cour) != 0){
           if ( premiere_rencontre_car_spe == 1 ){
               printf("%s", mot);
-
+              //etat = 1;
               while (!etat_checked){
                   verification_des_token_lus();
                   if (etat_checked){
                       break;
                   }
               }
-
+              //etat_checked =0;
               printf("\n-----------------------");
               Affichage_Token(Sym_COUR.CODE);
               printf("\n");
               premiere_rencontre_car_spe = 0;
 
           }
+          //etat =1;
           strcpy(mot, string);
           printf("\n------%s--------", mot);
           if( mot != " "){
+              printf("I'm here");
               while (!etat_checked){
+                  printf("%s , %d", mot, etat);
+                  printf("still here");
                   verification_des_token_lus();
                   if (etat_checked){
                       break;
                   }
               }
+              printf("skiped while");
               //etat_checked = 0;
               printf("\n-----------------------");
               Affichage_Token(Sym_COUR.CODE);
@@ -112,7 +170,7 @@ int main(int argc, char const *argv[]) {
                       }
                   }
 
-                  etat_checked = 0;
+                  //etat_checked = 0;
                   printf("\n-----------------------");
                   Affichage_Token(Sym_COUR.CODE);
                   printf("\n");
@@ -122,8 +180,8 @@ int main(int argc, char const *argv[]) {
               Lire_Car();
       }
       premiere_rencontre_espace = 1;
-      strcat(mot,char_to_string(Car_Cour));
-
+      strcat(mot,char_to_string(Car_Cour));*/
+      //etat =1;
   }while(Car_Cour != EOF);
 
   fclose(Fichier);
