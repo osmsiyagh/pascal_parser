@@ -35,6 +35,8 @@
                           DIFF_TOKEN,
                           PO_TOKEN,
                           PF_TOKEN,
+                          AO_TOKEN,
+                          AF_TOKEN,
                           FIN_TOKEN,
                           ID_TOKEN,
                           NUM_TOKEN,

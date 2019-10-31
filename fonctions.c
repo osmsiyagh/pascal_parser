@@ -6,7 +6,7 @@
 
 
 #define  taille_tab_mot_cles 12
-#define  taille_tab_sym_spe 17
+#define  taille_tab_sym_spe 19
 
 
 #include "prototypes.h"
@@ -70,6 +70,14 @@ int checkString(char str1[])
     return 1;
 }
 
+int checkAlphaNum(char mot[]){
+    for (int i = 0; i < strlen(mot); i++) {
+        if (isalnum(mot[i]) == 0){
+            return 0;
+        }
+    }
+    return 1;
+}
 
 void Affichage_Token(CODES_LEX code)
 {
@@ -234,7 +242,10 @@ void verification_des_token_lus(){
                             strcpy(Sym_COUR.NOM, mot);
                         }
                     }
-                }else
+                }else if( checkAlphaNum(mot) == 0){
+                    Sym_COUR.CODE = ERREUR_TOKEN;
+                    strcpy(Sym_COUR.NOM, mot);
+                } else
                 {
                     Sym_COUR.CODE = ID_TOKEN;
                     strcpy(Sym_COUR.NOM, mot);
