@@ -242,10 +242,10 @@ void verification_des_token_lus(){
                             strcpy(Sym_COUR.NOM, mot);
                         }
                     }
-                }else if( checkAlphaNum(mot) == 0){
-                    Sym_COUR.CODE = ERREUR_TOKEN;
+                } else if (checkAlphaNum(mot) == 0){
                     strcpy(Sym_COUR.NOM, mot);
-                } else
+                    Sym_COUR.CODE = ERREUR_TOKEN;
+                }else
                 {
                     Sym_COUR.CODE = ID_TOKEN;
                     strcpy(Sym_COUR.NOM, mot);
