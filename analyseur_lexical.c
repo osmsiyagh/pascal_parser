@@ -52,14 +52,27 @@ int main(int argc, char const *argv[]) {
   Fichier = fopen("/Users/macbook/CLionProjects/untitled/test.p", "r");
   do{
       Lire_Car();
-      //printf("%c \t", Car_Cour);
       switch (Car_Cour){
           case '\t' :
-              //printf("I found a tabulation sign\n");
-              //strcpy(mot, "");
               break;
           case '\n':
-              //printf("I found a new line sign\n");
+              break;
+          case '{' :
+              //Traitement des commentaires:
+              if (strcmp(mot, "") == 0){
+                  strcpy(mot, char_to_string('{'));
+                  printf("\n%s", mot);
+                  printf("\n");
+                  Affichage_Token(AO_TOKEN);
+              }
+              while(Car_Cour != '}'){
+                  Lire_Car();
+              }
+              strcpy(mot, char_to_string('}'));
+              printf("\n%s", mot);
+              printf("\n");
+              Affichage_Token(AF_TOKEN);
+              strcpy(mot,"");
               break;
           case ' ':
               while (Car_Cour == ' '){
@@ -67,9 +80,7 @@ int main(int argc, char const *argv[]) {
               }
               fseek(Fichier, -1, SEEK_CUR);
               if (strcmp(mot, "") != 0){
-                  //printf("\n-------------------------------------------------------------------------");
                   printf("\n%s", mot);
-                  //printf("\n-------------------------------------------------------------------------");
                   verification_des_token_lus();
                   printf("\n");
                   Affichage_Token(Sym_COUR.CODE);
@@ -77,10 +88,6 @@ int main(int argc, char const *argv[]) {
               }
               break;
           default:
-              /*if (checkString(char_to_string(Car_Cour)) || isdigit(Car_Cour) ){
-                  strcat(mot, char_to_string(Car_Cour));
-              }*/
-
               if (Car_Cour_Car_Spe(Car_Cour)){
                   if (strcmp(mot, "") != 0){
                       printf("\n%s", mot);
@@ -90,7 +97,6 @@ int main(int argc, char const *argv[]) {
                   }
                   strcpy(mot, string);
                   printf("\n%s", mot);
-                  //printf("---> caractre");
                   verification_des_token_lus();
                   printf("\n");
                   Affichage_Token(Sym_COUR.CODE);
@@ -98,17 +104,6 @@ int main(int argc, char const *argv[]) {
               } else{
                   strcat(mot, char_to_string(Car_Cour));
               }
-              /*if (isalnum(Car_Cour) == 0 && (Car_Cour_Car_Spe(Car_Cour) == 0) ){
-                  while (Car_Cour !=' ' || Car_Cour != '\n' || Car_Cour != '\t'){
-                      strcat(mot, char_to_string(Car_Cour));
-                      Lire_Car();
-                  }
-                  fseek(Fichier, -1, SEEK_CUR);
-                  strcpy(Sym_COUR.NOM, mot);
-                  Sym_COUR.CODE = ERREUR_TOKEN;
-                  Affichage_Token(Sym_COUR.CODE);
-                  strcpy(mot, "");
-              }*/
               break;
       }
   }while(Car_Cour != EOF);

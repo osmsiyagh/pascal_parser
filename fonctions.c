@@ -3,20 +3,13 @@
 #include <ctype.h>
 #include <string.h>
 
-
-
 #define  taille_tab_mot_cles 12
 #define  taille_tab_sym_spe 19
 
-
 #include "prototypes.h"
-
-
 
 extern TSym_Cour tab_car_spe[taille_tab_sym_spe];
 extern TSym_Cour tab_mot_cle[taille_tab_mot_cles];
-
-
 
 void Lire_Car(){
   Car_Cour=fgetc(Fichier);
@@ -163,6 +156,12 @@ void Affichage_Token(CODES_LEX code)
             break ;
         case PF_TOKEN :
             printf("PF_TOKEN") ;
+            break ;
+        case AO_TOKEN :
+            printf("AO_TOKEN") ;
+            break ;
+        case AF_TOKEN :
+            printf("AF_TOKEN") ;
             break ;
         case FIN_TOKEN :
             printf("FIN_TOKEN") ;
